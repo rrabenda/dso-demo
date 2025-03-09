@@ -37,15 +37,15 @@ spec:
       image: gcr.io/kaniko-project/executor:v1.6.0-debug
       imagePullPolicy: Always
       env:
-      - name: container
-      value: docker
+        - name: container
+          value: docker
       command:
-      - sleep
+        - sleep
       args:
-      - 99d
+        - 99d
       volumeMounts:
-      - name: jenkins-docker-cfg
-      mountPath: /kaniko/.docker
+        - name: jenkins-docker-cfg
+          mountPath: /kaniko/.docker
   volumes:
     - name: m2
       hostPath:
@@ -59,8 +59,8 @@ spec:
     - name: jenkins-docker-cfg
       projected:
         sources:
-        - secret:
-          name: regcred
-          items:
-          - key: .dockerconfigjson
-            path: config.json
+          - secret:
+              name: regcred
+              items:
+                - key: .dockerconfigjson
+                  path: config.json
