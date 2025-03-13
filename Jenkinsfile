@@ -18,7 +18,7 @@ pipeline {
         }
       }
     }
-    
+
     stage('Static Analysis') {
       parallel {
         stage('Unit Tests') {
@@ -49,7 +49,7 @@ pipeline {
 
         stage('OSS License Checker') {
           steps {
-            container('licensfinder') {
+            container('licensefinder') {
               sh 'ls -al'
               sh '''#!/bin/bash --login
                     /bin/bash --login
