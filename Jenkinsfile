@@ -52,10 +52,15 @@ pipeline {
             container('licensefinder') {
               sh 'ls -al'
               sh '''#!/bin/bash --login
+                    echo "step 1"
                     /bin/bash --login
+                    echo "step 2"
                     rvm use default
+                    echo "step 3"
                     gem install license_finder
+                    echo "step 4"
                     license_finder
+                    echo "step 5"
                     '''
             }
           }
