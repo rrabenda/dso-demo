@@ -18,6 +18,7 @@ pipeline {
         }
       }
     }
+    
     stage('Static Analysis') {
       parallel {
         stage('Unit Tests') {
@@ -61,6 +62,7 @@ pipeline {
         }
       }
     }
+
     stage('Package') {
       parallel {
         stage('Create Jarfile') {
