@@ -28,7 +28,7 @@ pipeline {
           }
         }
 
-        stage('Sofrware Composition Analysis (SCA)') {
+        stage('Software Composition Analysis (SCA)') {
           steps{
             container('maven') {
               catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -38,12 +38,27 @@ pipeline {
           }
           post {
             always {
-              archiveArtifacts allowEmptyArchive: true, artifacts: 'target/dependency-check-report.html', fingerprint: true, onlyIfSuccessful: true
+              archiveArtifacts allowEmptyArchive: true, artifacts: 
+              'target/dependency-check-report.html', fingerprint: true, 
+              onlyIfSuccessful: true
               // dependencyCheckPublisher pattern: 'report.xml'
             }
           }
-
         }
+
+        // stage('OSS License Checker') {
+        //   steps {
+        //     container('licensfinder') {
+        //       sh 'ls -al'
+        //       sh '''#!/bin/bash --login
+        //             /bin/bash --login
+        //             rvm use default
+        //             gem install license_finder
+        //             license_finder
+        //             '''
+        //     }
+        //   }
+        // }
       }
     }
     stage('Package') {
