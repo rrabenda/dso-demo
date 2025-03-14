@@ -80,19 +80,19 @@ pipeline {
       }
     }
 
-    stage('Static Application Security Testing (SAST)') {
-      steps {
-        container('slscan') {
-          sh 'scan --type java,depscan --build'
-        }
-      }
-      post {
-        success {
-          archiveArtifacts allowEmptyArchive: true, artifacts:
-          'reports/*', fingerprint: true, onlyIfSuccessful: true
-        }
-      }
-    }
+    // stage('Static Application Security Testing (SAST)') {
+    //   steps {
+    //     container('slscan') {
+    //       sh 'scan --type java,depscan --build'
+    //     }
+    //   }
+    //   post {
+    //     success {
+    //       archiveArtifacts allowEmptyArchive: true, artifacts:
+    //       'reports/*', fingerprint: true, onlyIfSuccessful: true
+    //     }
+    //   }
+    // }
 
     stage('Package') {
       parallel {
@@ -109,6 +109,25 @@ pipeline {
             container('kaniko') {
               sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure \
               --skip-tls-verify --cache=true --destination=docker.io/altsin/dso-demo'
+            }
+          }
+        }
+      }
+    }
+
+    stage('Image Analysis') {
+      parallel {
+        stage('Image Linting') {
+          steps {
+            container('docker-tools') {
+              sh 'dockle docker.io/xxxxxx/dso-demo'
+            }
+          }
+        }
+        stage('Image Scan') {
+          steps {
+            container('docker-tools') {
+              sh 'trivy image --timeout 10m --exit-code 1 xxxxxx/dso-demo'
             }
           }
         }
