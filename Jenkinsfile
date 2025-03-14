@@ -120,14 +120,14 @@ pipeline {
         stage('Image Linting') {
           steps {
             container('docker-tools') {
-              sh 'dockle docker.io/xxxxxx/dso-demo'
+              sh 'dockle docker.io/altsin/dso-demo'
             }
           }
         }
         stage('Image Scan') {
           steps {
             container('docker-tools') {
-              sh 'trivy image --timeout 10m --exit-code 1 xxxxxx/dso-demo'
+              sh 'trivy image --timeout 10m --exit-code 1 altsin/dso-demo'
             }
           }
         }
