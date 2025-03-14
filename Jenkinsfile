@@ -12,7 +12,8 @@ pipeline {
         stage('Compile') {
           steps {
             container('maven') {
-              sh 'mvn --version | grep -i java '
+              sh 'echo $MAVEN_HOME'
+              sh 'echo $JAVA_HOME'
               sh 'mvn compile'
             }
           }
